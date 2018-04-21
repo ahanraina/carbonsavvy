@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 
 <head>
@@ -12,17 +12,13 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>Hello World</title>
 </head>
-
-<body>
+<script type"text/javascript" src="js/formhandling.js";>
+        </script>
+<body onload="FinalFootprintEmbed">
     <div class="app">
         <img src="img/largelogo.png" alt="CarbonSavvy logo">
         <br>
-        <h1>Your carbon footprint is...</h1>
-        <script type"text/javascript" src="js/formhandling.js";>
-        </script>
-        <script type="text/javascript">
-            console.log(FinalFootprintEmbed());
-        </script>
+       <h1>Your Footprint is <span id="footprint"></span></h1>
         <p id="footprint" onclick="FinalFootprintEmbed()">Click here!</p>
     </div>
 
@@ -30,7 +26,6 @@
     <a href="LoginScreen\registration.html">Create your account!</a>
     <!-- Javascript files -->
     <script type="text/javascript" src="js/formhandling.js"></script>
-    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
