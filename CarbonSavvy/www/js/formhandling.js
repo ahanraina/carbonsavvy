@@ -1,4 +1,5 @@
 function namefunc(form) {
+    sessvars.myObj.name = {}
     sessvars.myObj.name = form.name.value;
 }
 
@@ -17,6 +18,7 @@ function registerInfo(form) {
             sessvars.myObj.diet = document.getElementsByName('radio')[i].value;
         }
     }
+    console.log(sessvars.myObj.kwh);
 }
 
 // Getter functions
@@ -92,8 +94,3 @@ function FinalFootprint()
 function FinalFootprintEmbed(){
     document.getElementById("footprint").innerHTML = FinalFootprint() + "killograms of CO2 per year.";
 }
-
-
-
-
-
