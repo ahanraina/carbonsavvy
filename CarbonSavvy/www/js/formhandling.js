@@ -1,68 +1,40 @@
 function namefunc(form) {
-    sessvars.myObj.name = {}
-    sessvars.myObj.name = form.name.value;
+    console.log(form.name.value);
+    sessionStorage.setItem("name", form.name.value);
+    console.log(sessionStorage.name);
 }
 
 
 function nameoutput() {
-    document.getElementById(nameplace).innerHTML = "Hi there, " + sessvars.myObj.name + "!";
+    document.getElementById(nameplace).innerHTML = "Hi there, " + sessionStorage.name + "!";
 }
 
 function registerInfo(form) {
-    sessvars.myObj.kwh = form.kwh.value;
-    sessvars.myObj.zipcode = form.zipcode.value;
-    sessvars.myObj.mileage = form.mileage.value;
-    sessvars.myObj.miles = form.miles.value;
+    sessionStorage.setItem("kwh", form.kwh.value);
+    sessionStorage.setItem("zipcode", form.zipcode.value);
+    sessionStorage.setItem("mileage", form.mileage.value);
+    sessionStorage.setItem("miles", form.miles.value);
     for (var i = 0; i < document.getElementsByName('radio').length; i++) {
         if(document.getElementsByName('radio')[i].checked) {
-            sessvars.myObj.diet = document.getElementsByName('radio')[i].value;
+            sessionStorage.setItem("diet", document.getElementsByName('radio')[i].value);
         }
     }
-    console.log(sessvars.myObj.kwh);
-}
-
-// Getter functions
-
-function returnkwh() {
-    return sessvars.myObj.kwh;
-}
-
-function returnzipcode() {
-    return sessvars.myObj.zipcode;
-}
-
-function returnmileage() {
-    return sessvars.myObj.mileage;
-}
-
-function returndiet() {
-    return sessvars.myObj.diet;
-}
-
-function returnname() {
-    return sessvars.myObj.name;
-}
-
-function returnmiles() {
-    return sessvars.myObj.miles;
+    console.log(sessionStorage.diet);
 }
 
     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=DIET FOOTPRINT FUNCTIONS=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-function Diet_Footprint()
+function Diet_Footprint(dietChoice)
 {
-    var Diet = returndiet();
-    var DietFootprint = 0;
-
-    switch (Diet.dietChoice)
+    switch (dietChoice)
     {
-        case 0: //Vegan
+        case "vegan": //Vegan
             DietFootprint = 1360.78; //1.5 Tons
             break;
-        case 1: //Vegetarian
+        case "vegetarian": //Vegetarian
             DietFootprint = 1542.21; //1.7 Tons
             break;
-        case 2: //Non-Vegetarian
+        case "nonveg": //Non-Vegetarian
             DietFootprint = 2267.96; //2.5 Tons
             break;
         default:
@@ -77,20 +49,60 @@ function FinalFootprint()
 {
     var FinalElecFootprint = 0;
     var ElecEmissionFactor = 496.3659508;
-
-    FinalElecFootprint = ElecEmissionFactor * 10000; // should be returnkwh()
-    return FinalElecFootprint;
-
-    var g = 1/returnmileage();
-    var GalYear = g*returnmiles();
-    var Footprint_Transport = GoalYear(0.00878);
-    return Footprint_Transport;
-
-    var foot = CalcElectricFootprint() + Transportation_Footprint() + DietFootprint();
+    FinalElecFootprint = ElecEmissionFactor * sessionStorage.kwh;
+    var foot = FinalElecFootprint + Transportation_Footprint(sessionStorage.mileage, sessionStorage.miles) + Diet_Footprint(sessionStorage.diet);
     console.log(foot);
     return foot;
+}
+
+function FinalFootprintEmbed(){
+    document.getElementById("footprint").innerHTML = FinalFootprint() + " killograms of CO2 per year.";
+}
+
+/* ------------ transportation.js ---------------- */
+var gasmileage = 0;
+var miles_per_year = 0;
+
+function Transportation_Footprint(gasmileage, miles_per_year) {
+	var g = 1/gasmileage;
+	var GalYear = g*miles_per_year;
+	var Footprint_Transport = GalYear;
+	return Footprint_Transport;
 
 }
-function FinalFootprintEmbed(){
-    document.getElementById("footprint").innerHTML = FinalFootprint() + "killograms of CO2 per year.";
+
+function CalcElectricFootprint( coalFoot,  natGasFoot,  hydElecFoot,  oilFoot) //Final Equation for electricity carbon footprint
+{
+    var FinalElecFootprint = 0;
+    var TotalElecFootprint = coalFoot + natGasFoot + hydElecFoot + oilFoot;
+
+    FinalElecFootprint = TotalElecFootprint;
+    return FinalElecFootprint;
 }
+
+function CalcCoalFootprint(coalkWh) //Convert Coal KiloWatt Hours into Carbon Data
+{
+	var coalOutput = coalkWh * 1945.00464 * 0.2552;
+
+    return coalOutput;
+}
+function CalcNatGasFootPrint(natGaskWh) //Convert Natural Gas KiloWatt Hours into Carbon Data
+{
+     var natGasOutput = natGaskWh * 0.003715182 * 0.2001;
+
+    return natGasOutput;
+}
+function CalcHydElecFootPrint(hydEleckWh) //Convert Hydroelectricity KiloWatt Hours into Carbon Data
+{
+      var hydElecOutput = hydEleckWh * 0.000011 * 0.0005;
+
+    return hydElecOutput;
+}
+function CalcOilFootprint(oilkWh) //Convert Oil KiloWatt Hours into Carbon Data
+{
+      var oilOutput = oilkWh * 0.0026 * 0.008759688;
+
+    return oilOutput;
+}
+
+var PrafulsLoveForTya = true;
