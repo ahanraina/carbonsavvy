@@ -47,8 +47,9 @@ function returnmiles() {
 
     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=DIET FOOTPRINT FUNCTIONS=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-function Diet_Footprint(sessvars.myObj.diet)
+function Diet_Footprint()
 {
+    var Diet = returndiet();
     var DietFootprint = 0;
 
     switch (Diet.dietChoice)
@@ -70,16 +71,16 @@ function Diet_Footprint(sessvars.myObj.diet)
     return DietFootprint;
 }
 
-function FinalFootprint(sessvars.myObj.mileage, sessvars.myObj.miles, sessvars.myObj.kwh)
+function FinalFootprint()
 {
     var FinalElecFootprint = 0;
     var ElecEmissionFactor = 496.3659508;
 
-    FinalElecFootprint = ElecEmissionFactor * sessvars.myObj.kwh;
+    FinalElecFootprint = ElecEmissionFactor * 10000; // should be returnkwh()
     return FinalElecFootprint;
 
-    var g = 1/sessvars.myObj.mileage;
-    var GalYear = g*sessvars.Obj.miles;
+    var g = 1/returnmileage();
+    var GalYear = g*returnmiles();
     var Footprint_Transport = GoalYear(0.00878);
     return Footprint_Transport;
 
@@ -91,6 +92,7 @@ function FinalFootprint(sessvars.myObj.mileage, sessvars.myObj.miles, sessvars.m
 function FinalFootprintEmbed(){
     document.getElementById("footprint").innerHTML = FinalFootprint() + "killograms of CO2 per year.";
 }
+
 
 
 
