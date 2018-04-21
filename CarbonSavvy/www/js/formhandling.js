@@ -1,12 +1,13 @@
-namefunc(form) {
+function namefunc(form) {
     sessvars.myObj.name = form.name.value;
 }
 
-nameoutput() {
+
+function nameoutput() {
     document.getElementById(nameplace).innerHTML = "Hi there, " + sessvars.myObj.name + "!";
 }
 
-registerInfo(form) {
+function registerInfo(form) {
     sessvars.myObj.kwh = form.kwh.value;
     sessvars.myObj.zipcode = form.zipcode.value;
     sessvars.myObj.mileage = form.mileage.value;
@@ -20,45 +21,28 @@ registerInfo(form) {
 
 // Getter functions
 
-returnkwh() {
+function returnkwh() {
     return sessvars.myObj.kwh;
 }
 
-returnzipcode() {
+function returnzipcode() {
     return sessvars.myObj.zipcode;
 }
 
-returnmileage() {
+function returnmileage() {
     return sessvars.myObj.mileage;
 }
 
-returndiet() {
+function returndiet() {
     return sessvars.myObj.diet;
 }
 
-returnname() {
+function returnname() {
     return sessvars.myObj.name;
 }
 
-returnmiles() {
+function returnmiles() {
     return sessvars.myObj.miles;
-}
-
-function Transportation_Footprint(sessvars.myObj.mileage, sessvars.Obj.miles) {
-    var g = 1/sessvars.myObj.mileage;
-    var GalYear = g*sessvars.Obj.miles;
-    var Footprint_Transport = GoalYear(0.00878);
-    return Footprint_Transport;
-
-}
-
-function CalcElectricFootprint(sessvars.myObj.kwh) //Final Equation for electricity carbon footprint
-{
-    var FinalElecFootprint = 0;
-    var ElecEmissionFactor = 496.3659508;
-
-    FinalElecFootprint = ElecEmissionFactor * sessvars.myObj.kwh;
-    return FinalElecFootprint;
 }
 
     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=DIET FOOTPRINT FUNCTIONS=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -86,16 +70,28 @@ function Diet_Footprint(sessvars.myObj.diet)
     return DietFootprint;
 }
 
-function FinalFootprint()
+function FinalFootprint(sessvars.myObj.mileage, sessvars.myObj.miles, sessvars.myObj.kwh)
 {
-    var foot = CalcElectricFootprint() + Transportation_Footprint() + DietFootprint();
-    return foot;
-}
+    var FinalElecFootprint = 0;
+    var ElecEmissionFactor = 496.3659508;
 
-function FinalFootprintEmbed() 
-{
+    FinalElecFootprint = ElecEmissionFactor * sessvars.myObj.kwh;
+    return FinalElecFootprint;
+
+    var g = 1/sessvars.myObj.mileage;
+    var GalYear = g*sessvars.Obj.miles;
+    var Footprint_Transport = GoalYear(0.00878);
+    return Footprint_Transport;
+
+    var foot = CalcElectricFootprint() + Transportation_Footprint() + DietFootprint();
+    console.log(foot);
+    return foot;
+
+}
+function FinalFootprintEmbed(){
     document.getElementById("footprint").innerHTML = FinalFootprint() + "killograms of CO2 per year.";
 }
 
-var PrafulsLoveForTya = true;
+
+
 
