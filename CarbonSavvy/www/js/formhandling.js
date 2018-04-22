@@ -49,7 +49,7 @@ function FinalFootprint()
 {
     var FinalElecFootprint = 0;
     var ElecEmissionFactor = 496.3659508;
-    FinalElecFootprint = ElecEmissionFactor * sessionStorage.kwh;
+    FinalElecFootprint = (ElecEmissionFactor * sessionStorage.kwh) / 200; // not proper electric footprint
     var foot = FinalElecFootprint + Transportation_Footprint(sessionStorage.mileage, sessionStorage.miles) + Diet_Footprint(sessionStorage.diet);
     console.log(foot);
     return foot;
