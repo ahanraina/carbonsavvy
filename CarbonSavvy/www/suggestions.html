@@ -28,8 +28,12 @@
 			}
 		</style>
 	</head>
-
-	<body>
+		<body onload="FinalFootprintEmbed()">
+    <div class="app">
+        <img src="img/largelogo.png" alt="CarbonSavvy logo">
+        <br>
+       <p><h1><span id="footprint"></span></h1></p>
+    </div>
 		<div id="pts">
 			<script>
 				document.getElementById("demo").innerHTML = foot;
